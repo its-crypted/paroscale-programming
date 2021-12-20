@@ -48,11 +48,14 @@ int main(){
 	 	tmp[i] = list[i];
 	tmp[3] = 4;	//the next added number will get the value 4
 
-	list = tmp;
+	free(list);	//This will free the old list.
+
+	list = tmp;	//This will create a new list.
 
 	printf("\nThe newly added element list\n");
 	for(int i = 0; i < 4; i++)
-		printf("%i\n", tmp[i]);
+		printf("%i\n", list[i]);
 
+	free(list);	//This will free the the new created list.
 	return 0;
 }
