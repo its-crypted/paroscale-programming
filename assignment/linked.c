@@ -2,46 +2,47 @@
 #include <stdlib.h>
 
 typedef struct node{
-	int nubmer;
+	int num;
 	struct node *next;
 }node;
 
+void count_of_nodes(node *head);
 int main(){
-	node *list = NULL;
+	node *head = malloc(sizeof(node));
+	head->num = 1;
+	head->next = NULL;
+	printf("%d\n", head->num);
 
-	node *n = malloc(sizeof(node));
-	if(n == NULL)
-		return 1;
-	n->number = 1;
-	n->next = NULL;
+	node *current = malloc(sizeof(node));
+	current->num = 2;
+	current->next = NULL;
+	/* take the value of current and place it into the null vlaue of head */
+	head->next = current;
+	printf("%d\n", head->next->num);
 
-	//update  list to point new node
-	list = n;
+	current = malloc(sizeof(node));
+	current->num = 3;
+	current->next = NULL;
 
-	//add a number to a list;
-	n = malloc(sizeof(node));
-	if(n == NULL){
-		free(list);
-		return 1;
-	}
-	n->number = 2;
-	n->next = NULL;
+	head->next->next = current;
+	printf("%d\n", head->next->next->num);
 
-	list->next = n;
-
-	//add a number to list
-	n = malloc(sizeof(node));
-	if(n == NULL){
-		free(list->next);
-		free(list);
-		return 1;
-	}
-	n->number = 3;
-	n->next = NULL;
-	list->next->next = n;
-
-	//print numbers
-	for(node *tmp = list; tmp != NULL; tmp = tmp->next)
-		printf("%i\n", tmp->number); 
-
+	count_of_nodes(head);
+	return 0;
 }
+
+/* Count the nodes */
+
+void count_of_nodes(node *head){
+	int c = 0;
+	node *ptr;
+	if(head == NULL)
+		printf("Linked list empty\n");
+	ptr = head;
+	while(ptr != NULL){
+		c++;
+		ptr = ptr->next;
+	}
+	printf("%d\n", c);
+}
+
