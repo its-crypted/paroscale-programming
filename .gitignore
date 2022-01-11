@@ -1,4 +1,6 @@
 C/*
-assignment/*
-!assignment/ll
 !*.c
+assignment/*/*
+!*/*/*.c
+
+
