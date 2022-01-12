@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	if (argc > 2 && strchr(argv[2], 'd') != NULL)
 		flags |= FTW_DEPTH;
 
-	printf("File_type\tLevel\tFile_size\tPath\t\t\t\t\t\t Inode\t\tAccess_t\tModify_t\t c_time\n");
+	printf("File_type\tLevel\tFile_size\tPath\t\t\t\t\t\t Inode\t\tAccess_t\tModify_t\t c_time \t Base_dir\n");
 	if (nftw((argc < 2) ? "." : argv[1], display_info, 20, flags) == -1) {
 		perror("nftw");
 		return -1;
@@ -33,7 +33,7 @@ static int display_info(const char *fpath,
              		int tflag,
 			struct FTW *ftwbuf)
 {
-	printf("%-3s\t\t%2d\t %7jd\t %-40s\t%ld\t%ld \t%ld \t%ld\n",
+	printf("%-3s\t\t%2d\t %7jd\t %-40s\t%ld\t%ld \t%ld \t%ld\t\t %-10s",
 		(tflag == FTW_D) ?   "d"   : (tflag == FTW_DNR) ? "dnr" :
 		(tflag == FTW_DP) ?  "dp"  : (tflag == FTW_F) ?   "f" :
 		"???",
