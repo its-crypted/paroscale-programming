@@ -1,5 +1,6 @@
 #define _XOPEN_SOURCE 500
 #include <stdio.h>
+#include <libgen.h>
 #include <ftw.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,9 +34,10 @@ static int linked(const char *fpath,
 		  int typeflag,
 		  struct FTW *ftw); 
 
-void add_at_end(node *h, node *p);
+void add_at_end(node *p);
 
 /* ------------------Main---------------------*/
+
 int main(int argc, char *argv[]){
 	int flags = 0;
 	if(argc > 2 && strchr(argv[2], 'd') != NULL)
@@ -48,10 +50,11 @@ int main(int argc, char *argv[]){
 		return -1;
 	}
 	printf("\n");
-//	nftw((argc < 2) ? "." : argv[1], linked, 20, flags);
 	printll(tmp);
 	exit(EXIT_SUCCESS);
 }
+
+/* ----------------Main exit--------------------*/
 
 static int disp(const char *fpath,
 	  const struct stat *s,
@@ -61,6 +64,7 @@ static int disp(const char *fpath,
 	printf("%-3s\t\t%7jd\t\t%-40s\t\t%ld\n",
 		(typeflag == FTW_D) ? "d" : (typeflag == FTW_F) ? "f": "???",
 		s->st_size, fpath, s->st_ino);
+
 	struct dirent *r;
 	if(typeflag == FTW_F){  
 		if(head == NULL){
@@ -71,48 +75,27 @@ static int disp(const char *fpath,
 			head->m_tm	=	s->st_mtime;
 			head->c_tm	=	s->st_ctime;
 			head->next	= 	NULL;
-			printf("%ld\n", head->ino);
-			printf("%ld\n", head->f_size);
-			printf("%ld\n", head->a_tm);
-			printf("%ld\n", head->m_tm);
-			printf("%ld\n", head->c_tm);
 			tmp = head;
 		} else if(head != NULL) { 
+			node *c = (struct node *)malloc(sizeof(node));
 			c->ino		=	s->st_ino;
 			c->f_size	=	s->st_size;
 			c->a_tm		=	s->st_atime;
 			c->m_tm		=	s->st_mtime;
 			c->c_tm		=	s->st_ctime;
 			c->next		= 	NULL;
-			add_at_end(tmp, c);
-			printf("hello, debug\n");
-			printf("%ld\n", tmp->ino);
-			printf("%ld\n", tmp->f_size);
-			printf("%ld\n", tmp->a_tm);
-			printf("%ld\n", tmp->m_tm);
-			printf("%ld\n", tmp->c_tm);
-
-//			printf("Hello debug\n");
-//			node *ptr = malloc(sizeof(node));
-//			ptr->ino	=	s->st_ino;
-//			ptr->f_size	=	s->st_size;
-//			ptr->a_tm	=	s->st_atime;
-//			ptr->m_tm	=	s->st_mtime;
-//			ptr->c_tm	=	s->st_ctime;
-//			ptr->next	= 	NULL;
-//			tmp = add_at_end(tmp, ptr);
+			add_at_end(c);
 		}
 	}
 	return 0;
 }	
 
-void add_at_end(node *h, node *p){
-	node *ptr, *c1 = malloc(sizeof(node));
-	ptr = h;
-	c1 = p;
-	while(ptr->next != NULL)
-		ptr = ptr->next;
-	ptr->next = c1;
+void add_at_end(node *p){
+	node *c2 = (struct node *)malloc(sizeof(node));
+	c2 = tmp;
+	while(c2->next != NULL)
+		c2 = c2->next;
+	c2->next = p;
 }
 
 void printll(node *head){
@@ -127,58 +110,6 @@ void printll(node *head){
 		printf("%ld\n", ptr->m_tm);
 		printf("%ld\n", ptr->c_tm);
 		ptr = ptr->next;
+		printf("\n");
 	}
 }
-
-/*
- -------------------extra---------------- x
-		while(tmp != NULL){
-			printf("%ld\n", tmp->ino);
-			printf("%ld\n", tmp->f_size);
-			printf("%ld\n", tmp->a_tm);
-			printf("%ld\n", tmp->m_tm);
-			printf("%ld\n", tmp->c_tm);
-			tmp = tmp->next;
-			printf("\n");
-		}
-			while(head != NULL){
-				printf("%ld\n", head->ino);
-				printf("%ld\n", head->f_size);
-				printf("%ld\n", head->a_tm);
-				printf("%ld\n", head->m_tm);
-				printf("%ld\n", head->c_tm);
-			}
-*---------------------clear---------------------------*
-			if(tmp != NULL){
-				tmp->next = ptr;
-				tmp = tmp->next;
-			}
-
-* Linked list function *
-
-//static int linked(const char *fpath,
-//	  const struct stat *s,
-//	  int typeflag,
-//	struct FTW *ftw){ 
-//		  else if(head != NULL) {
-//		  	tmp = head;
-//
-//			node *ptr = malloc(sizeof(node));
-//			ptr->ino	=	s->st_ino;
-//			ptr->f_size	=	s->st_size;
-//			ptr->a_tm	=	s->st_atime;
-//			ptr->m_tm	=	s->st_mtime;
-//			ptr->c_tm	=	s->st_ctime;
-//			ptr->next	= 	NULL;
-//
-//			
-//			printf("%ld\n", ptr->ino);
-//			printf("%ld\n", ptr->f_size);
-//			printf("%ld\n", ptr->a_tm);
-//			printf("%ld\n", ptr->m_tm);
-//			printf("%ld\n", ptr->c_tm);
-//			printf("\n");
-//			tmp->next = ptr;
-//			ptr = ptr->next;
-//		}
- */
