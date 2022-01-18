@@ -18,7 +18,7 @@ typedef struct node{
 	struct node *next;
 }node;
 
-node *tmp = NULL;
+node *c, *tmp = NULL;
 static node *head = NULL;
 
 void printll(node *head);	//printing of linked list
@@ -33,7 +33,7 @@ static int linked(const char *fpath,
 		  int typeflag,
 		  struct FTW *ftw); 
 
-node *add_at_end(node *head, node *c);
+void add_at_end(node *h, node *p);
 
 /* ------------------Main---------------------*/
 int main(int argc, char *argv[]){
@@ -62,7 +62,7 @@ static int disp(const char *fpath,
 		(typeflag == FTW_D) ? "d" : (typeflag == FTW_F) ? "f": "???",
 		s->st_size, fpath, s->st_ino);
 	struct dirent *r;
-	if(typeflag == FTW_F || (typeflag == FTW_D)? FTW_CH: "???"){  
+	if(typeflag == FTW_F){  
 		if(head == NULL){
 			head = malloc(sizeof(node));
 			head->ino	=	s->st_ino;
@@ -71,36 +71,48 @@ static int disp(const char *fpath,
 			head->m_tm	=	s->st_mtime;
 			head->c_tm	=	s->st_ctime;
 			head->next	= 	NULL;
+			printf("%ld\n", head->ino);
+			printf("%ld\n", head->f_size);
+			printf("%ld\n", head->a_tm);
+			printf("%ld\n", head->m_tm);
+			printf("%ld\n", head->c_tm);
 			tmp = head;
-		} else if(head != NULL) {
-			if(tmp != NULL){
-				node *ptr = malloc(sizeof(node));
-				ptr->ino	=	s->st_ino;
-				ptr->f_size	=	s->st_size;
-				ptr->a_tm	=	s->st_atime;
-				ptr->m_tm	=	s->st_mtime;
-				ptr->c_tm	=	s->st_ctime;
-				ptr->next	= 	NULL;
-				tmp->next = ptr;
-				tmp = tmp->next;
-			}
-		}
-		while(tmp != NULL){
+		} else if(head != NULL) { 
+			c->ino		=	s->st_ino;
+			c->f_size	=	s->st_size;
+			c->a_tm		=	s->st_atime;
+			c->m_tm		=	s->st_mtime;
+			c->c_tm		=	s->st_ctime;
+			c->next		= 	NULL;
+			add_at_end(tmp, c);
+			printf("hello, debug\n");
 			printf("%ld\n", tmp->ino);
 			printf("%ld\n", tmp->f_size);
 			printf("%ld\n", tmp->a_tm);
 			printf("%ld\n", tmp->m_tm);
 			printf("%ld\n", tmp->c_tm);
-			tmp = tmp->next;
+
+//			printf("Hello debug\n");
+//			node *ptr = malloc(sizeof(node));
+//			ptr->ino	=	s->st_ino;
+//			ptr->f_size	=	s->st_size;
+//			ptr->a_tm	=	s->st_atime;
+//			ptr->m_tm	=	s->st_mtime;
+//			ptr->c_tm	=	s->st_ctime;
+//			ptr->next	= 	NULL;
+//			tmp = add_at_end(tmp, ptr);
 		}
 	}
 	return 0;
 }	
 
-node *add_at_end(node *head, node *c){
-	head->next = c;
-	head = head->next;
-	return head;
+void add_at_end(node *h, node *p){
+	node *ptr, *c1 = malloc(sizeof(node));
+	ptr = h;
+	c1 = p;
+	while(ptr->next != NULL)
+		ptr = ptr->next;
+	ptr->next = c1;
 }
 
 void printll(node *head){
@@ -129,7 +141,18 @@ void printll(node *head){
 			tmp = tmp->next;
 			printf("\n");
 		}
+			while(head != NULL){
+				printf("%ld\n", head->ino);
+				printf("%ld\n", head->f_size);
+				printf("%ld\n", head->a_tm);
+				printf("%ld\n", head->m_tm);
+				printf("%ld\n", head->c_tm);
+			}
 *---------------------clear---------------------------*
+			if(tmp != NULL){
+				tmp->next = ptr;
+				tmp = tmp->next;
+			}
 
 * Linked list function *
 
