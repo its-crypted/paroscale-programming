@@ -66,6 +66,21 @@ static int disp(const char *fpath,
 		s->st_size, fpath, s->st_ino);
 
 	struct dirent *r;
+	DIR *drip;	
+	int files = 0;
+	if(typeflag == FTW_D){
+		drip = opendir(fpath);
+		while((r = readdir(drip)) != NULL){
+			if(typeflag == FTW_F)
+				files++;
+			else
+				
+		}
+		closedir(drip);
+		printf("Dirname %s\n",fpath);
+		printf("n link %ld\n", s->st_nlink);
+		
+	}
 	if(typeflag == FTW_F){  
 		if(head == NULL){
 			head = malloc(sizeof(node));
