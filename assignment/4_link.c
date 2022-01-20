@@ -66,22 +66,16 @@ static int disp(const char *fpath,
 		s->st_size, fpath, s->st_ino);
 
 	struct dirent *r;
-	DIR *drip;	
+	DIR *d;	
 	int files = 0;
 	if(typeflag == FTW_D){
-		drip = opendir(fpath);
-		while((r = readdir(drip)) != NULL){
-			if(typeflag == FTW_F)
-				files++;
-			else
-				
-		}
-		closedir(drip);
-		printf("Dirname %s\n",fpath);
-		printf("n link %ld\n", s->st_nlink);
-		
+		d= opendir(fpath);
+		while((r = readdir(d)) != NULL)
+			files++;
+		if(files == 2)
+			printf("The dir is empty\n");	
 	}
-	if(typeflag == FTW_F){  
+	if(typeflag == FTW_F || files == 2){  
 		if(head == NULL){
 			head = malloc(sizeof(node));
 			head->ino	=	s->st_ino;
