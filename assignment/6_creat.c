@@ -53,8 +53,9 @@ int main(int argc, char *argv[]){
 	printf("\n");
 	printll(tmp);
 	int num, fd;
-	char f_name[100], dest[100], str_enter[200];
+	char f_name[100], dest[100], str_ent[100];
 	char c, dl;
+
 	while(1){
 		printf("1. Add a file\n");
 		printf("2. Delete a file\n");
@@ -76,14 +77,15 @@ int main(int argc, char *argv[]){
 			if(c == 'y' || c == 'Y'){
 				FILE *f;
 				f = fopen(dest, "w");
+				printf("How many lines do you want to enter: ");
+				scanf("%d", &num);
 				printf("Enter content\n");
-				while(c != EOF){
-					c = getchar();
-					fputc((char)c, f);
+				for(int i = 0; i < num+1; i++){
+					fgets(str_ent, sizeof str_ent, stdin);
+					fputs(str_ent, f);
 				}
 				printf("The content you entered is written to the file\n");
 				fclose(f);
-				
 				break;
 			} else
 				break;
