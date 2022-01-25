@@ -90,7 +90,7 @@ int main(int argc, char *argv[]){
 			} else
 				break;
 		case 2:
-			printf("File Name: \n");
+			printf("File Name: ");
 			scanf("%s", f_name);
 			printf("Destination: ");
 			scanf("%s", dest);
@@ -105,7 +105,7 @@ int main(int argc, char *argv[]){
 			scanf("%s", dest);
 			strcat(dest, f_name);
 			mkdir(dest, 00700);
-			printf("Directory %s successfully at %s", f_name, dest);
+			printf("Directory %s successfully at %s\n", f_name, dest);
 			break;
 		case 4:
 			printf("Dir Name: ");
