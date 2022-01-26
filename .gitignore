@@ -2,5 +2,7 @@ C/*
 !*.c
 assignment/*/*
 !*/*/*.c
+syscalls/*
+!syscalls/*.c
 
 
