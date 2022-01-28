@@ -127,7 +127,7 @@ int main(int argc, char *argv[]){
 			scanf("%s", dest);
 			strcat(dest, f_name);
 			stat(dest, &fb);
-			printf("The inode for removed file is: %ld", fb.st_ino);
+			printf("The inode for removed file is: %ld\n", fb.st_ino);
 			loc = malloc(sizeof(node));
 			loc->ino	=	fb.st_ino;
 			loc->f_size	=	fb.st_size;
@@ -135,26 +135,25 @@ int main(int argc, char *argv[]){
 			loc->m_tm	=	fb.st_mtime;
 			loc->c_tm	=	fb.st_ctime;
 			loc->next	= 	NULL;
-			node *b, *cu;
-			b = tmp;
-			cu = tmp;
-			int size = 0;
-			while(cu->ino == loc->ino){
-				printf("cu->ino %ld \n", cu->ino);
-				printf("loc->ino %ld \n", loc->ino);
-				cu = cu->next;
-				size++;
+			if(loc->ino == tmp->ino){
+				tmp = tmp->next;
+				printf("The node is shifted to next and break is here\n");
+				break;
+			} else {
+				node *bu, *cu;
+				bu = tmp;	//tmp
+				cu = tmp;	//tmp2
+				while(cu->ino != loc->ino){
+					bu = cu;
+					cu = cu->next;
+				}
+				bu->next = cu->next;
+				free(cu);
+				cu = NULL;
+				unlink(dest);
+				printf("File %s has been removed & linked list it updated.\n", f_name);
+				break;
 			}
-			printf("size of list %d\n", size);
-			for(int i = 0; i < size-1; i++)
-				printf("does it enter for loop?\n");
-				b = b->next;
-			b->next = cu->next;
-			free(cu);
-			unlink(dest);
-			printf("File %s has been removed.\n", f_name);
-
-			break;
 		case 3:
 			printf("Dir Name: ");
 			scanf("%s", f_name);
