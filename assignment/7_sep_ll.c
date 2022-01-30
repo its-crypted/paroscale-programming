@@ -161,7 +161,15 @@ int main(int argc, char *argv[]){
 			scanf("%s", dest);
 			strcat(dest, f_name);
 			mkdir(dest, 00700);
-			printf("Directory %s successfully at %s\n", f_name, dest);
+			stat(dest, &fb);
+			loc = malloc(sizeof(node));
+			loc->ino	=	fb.st_ino;
+			loc->f_size	=	fb.st_size;
+			loc->a_tm	=	fb.st_atime;
+			loc->m_tm	=	fb.st_mtime;
+			loc->c_tm	=	fb.st_ctime;
+			loc->next	= 	NULL;
+			printf("Directory %s successfully added at %s\n", f_name, dest);
 			break;
 		case 4:
 			printf("Dir Name: ");
