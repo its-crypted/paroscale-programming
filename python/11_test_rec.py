@@ -49,3 +49,4 @@ for i in range(int(init_dirs)):
 		create_dir_struct()
 		create_file_struct()
 os.getcwd()
+
