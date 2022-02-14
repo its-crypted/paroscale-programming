@@ -2,6 +2,7 @@ import glob
 import sqlite3
 import sys
 import os
+import csv
 
 param = sys.argv[1]
 path = str(input("Enter the database path to check: "))
@@ -41,14 +42,8 @@ def totsize():
 		k += file_sz
 	print(k)
 
-switcher = {
-	1: totfiles(),
-	2: totsize()
-	}
-
-def switch(arg):
-	return switcher.get(arg, "nothing")
-
 if check == 1:
-	switch()
+	totfiles()
+elif check == 2:
+	totsize()
 
