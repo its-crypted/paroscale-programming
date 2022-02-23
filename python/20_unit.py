@@ -51,80 +51,46 @@ while True:
     path = str(input("Enter the database path to check: "))
     con = sqlite3.connect(path)
     cursor = con.cursor()
-    cursor.execute("select totfiles from summary;")
+    cursor.execute("select totfiles, totsize, totltk, totmtk, totltm, totmtm, totmtg, totmtt from summary;")
     res = cursor.fetchall()
     totfiles = res[0][0]
-    cursor.execute("select totsize from summary;")
-    res = cursor.fetchall()
-    totsize = res[0][0]
-    cursor.execute("select totltk from summary;")
-    res = cursor.fetchall()
-    totltk = res[0][0]
-    cursor.execute("select totmtk from summary;")
-    res = cursor.fetchall()
-    totmtk = res[0][0]
-    cursor.execute("select totltm from summary;")
-    res = cursor.fetchall()
-    totltm = res[0][0]
-    cursor.execute("select totmtm from summary;")
-    res = cursor.fetchall()
-    totmtm = res[0][0]
-    cursor.execute("select totmtg from summary;")
-    res = cursor.fetchall()
-    totmtg = res[0][0]
-    cursor.execute("select totmtt from summary;")
-    res = cursor.fetchall()
-    totmtt = res[0][0]
-    print("The current values of DB are as follows.")
-    print("Total files for db now", totfiles)
-    print("Total size for db now", totsize)
-    print("Total size of files less than or equal to 1kb(size <= 1024) now", totltk)
-    print("Total size size greater than 1kb(size > 1024) now", totmtk)
-    print("Total size less than or equal to 1mb(size <= 1048576) now", totltm)
-    print("Total size greater than 1mb(size > 1048576) now", totmtm)
-    print("Total size greater than 1gb(size > 1073741824) now", totmtg)
-    print("Total size greater than 1tb(size > 1099511627776) now", totmtt)
-
-    print("Sleeping for 20 sec now perform the operation")
-    time.sleep(20)
-    print("-----------------------Time up-----------------------")
+    totsize = res[0][1]
+    totltk = res[0][2]
+    totmtk = res[0][3]
+    totltm = res[0][4]
+    totmtm = res[0][5]
+    totmtg = res[0][6]
+    totmtt = res[0][7]
+#    print("The current values of DB are as follows.")
+#    print("Total files for db now", totfiles)
+#    print("Total size for db now", totsize)
+#    print("Total size of files less than or equal to 1kb(size <= 1024) now", totltk)
+#    print("Total size size greater than 1kb(size > 1024) now", totmtk)
+#    print("Total size less than or equal to 1mb(size <= 1048576) now", totltm)
+#    print("Total size greater than 1mb(size > 1048576) now", totmtm)
+#    print("Total size greater than 1gb(size > 1073741824) now", totmtg)
+#    print("Total size greater than 1tb(size > 1099511627776) now", totmtt)
     print()
     subprocess.run(["gufi_dir2index", parent, indx])
     con = sqlite3.connect(path)
     cursor = con.cursor()
-    cursor.execute("select totfiles from summary;")
-    re = cursor.fetchall()
-    totfiles1 = re[0][0]
-    cursor.execute("select totsize from summary;")
-    re = cursor.fetchall()
-    totsize1 = re[0][0]
-    cursor.execute("select totltk from summary;")
-    re = cursor.fetchall()
-    totltk1 = re[0][0]
-    cursor.execute("select totmtk from summary;")
-    re = cursor.fetchall()
-    totmtk1 = re[0][0]
-    cursor.execute("select totltm from summary;")
-    re = cursor.fetchall()
-    totltm1 = re[0][0]
-    cursor.execute("select totmtm from summary;")
-    re = cursor.fetchall()
-    totmtm1 = re[0][0]
-    cursor.execute("select totmtg from summary;")
-    re = cursor.fetchall()
-    totmtg1 = re[0][0]
-    cursor.execute("select totmtt from summary;")
-    re = cursor.fetchall()
-    totmtt1 = re[0][0]
-    print("Total files for db now", totfiles1)
-    print("Total size for db now", totsize1)
-    print("Total size of files less than or equal to 1kb(size <= 1024) now", totltk1)
-    print("Total size size greater than 1kb(size > 1024) now", totmtk1)
-    print("Total size less than or equal to 1mb(size <= 1048576) now", totltm1)
-    print("Total size greater than 1mb(size > 1048576) now", totmtm1)
-    print("Total size greater than 1gb(size > 1073741824) now", totmtg1)
-    print("Total size greater than 1tb(size > 1099511627776) now", totmtt1)
-
+    res = cursor.fetchall()
+    totfiles1 = res[0][0]
+    totsize1 = res[0][1]
+    totltk1 = res[0][2]
+    totmtk1 = res[0][3]
+    totltm1 = res[0][4]
+    totmtm1 = res[0][5]
+    totmtg1 = res[0][6]
+    totmtt1 = res[0][7]
+#    print("Total files for db now", totfiles1)
+#    print("Total size for db now", totsize1)
+#    print("Total size of files less than or equal to 1kb(size <= 1024) now", totltk1)
+#    print("Total size size greater than 1kb(size > 1024) now", totmtk1)
+#    print("Total size less than or equal to 1mb(size <= 1048576) now", totltm1)
+#    print("Total size greater than 1mb(size > 1048576) now", totmtm1)
+#    print("Total size greater than 1gb(size > 1073741824) now", totmtg1)
+#    print("Total size greater than 1tb(size > 1099511627776) now", totmtt1)
     print("------------------------------------------------------------------")
     print()
     print("----------------The updated value are as follows-------------------")
