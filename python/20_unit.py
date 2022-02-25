@@ -36,7 +36,7 @@ def create_random_tree(parent, file=4, dir=2,
                 p = Path(root) / random_string()
                 p.touch(exist_ok=True)
                 fp = open(p, 'w')
-                fp.truncate(random.randint(0,1073741824))
+                fp.truncate(random.randint(0,10737418242))
                 fp.close()
                 allfiles.append(p)
             mdepth = os.path.relpath(root, str(parent)).count(os.sep)
@@ -53,6 +53,12 @@ while True:
     cursor = con.cursor()
     cursor.execute("select totfiles, totsize, totltk, totmtk, totltm, totmtm, totmtg, totmtt from summary;")
     res = cursor.fetchall()
+    conn = sqlite3.connect(path)
+    cur2 = conn.cursor()
+    cur2.execute("select name from entries;")
+    r = cur2.fetchall()
+    name = r[0][0]
+    print(name)
     totfiles = res[0][0]
     totsize = res[0][1]
     totltk = res[0][2]
@@ -74,9 +80,9 @@ while True:
     dirpath = "./h1/"
     fil = [ f for f in os.listdir( dirpath ) if os.path.isfile(dirpath + f) ] 
     print(fil)
-    f_size = os.path.getsize(dirpath + fil)
+    f_size = os.path.getsize(dirpath + fil[0])
     print(os.listdir(dirpath))
-    if fil[0] = False:
+    if fil[0] == []:
     	break
     else:
         subprocess.run(["rm", dirpath + fil[0]])
@@ -84,7 +90,7 @@ while True:
     subprocess.run(["gufi_dir2index", parent, indx])
     con = sqlite3.connect(path)
     cursor = con.cursor()
-    cursor.execute("select totfiles, totsize, totltk, totmtk, totltm, totmtm, totmtg, totmtt from summary;")
+    cursor.execute("select totfiles, totsize, totltk, totmtk, totltm, totmtm, totmtg, totmtt from summary; ")
     re = cursor.fetchall()
     totfiles1 = re[0][0]
     totsize1 = re[0][1]
@@ -95,12 +101,21 @@ while True:
     totmtg1 = re[0][6]
     totmtt1 = re[0][7]
     print()
+    conn = sqlite3.connect(path)
+    cur2 = conn.cursor()
+    cur2.execute("select name from entries;")
+    r = cur2.fetchall()
+    if r == []:
+    	break
+    else:
+    	name2 = r[0][0]
+    assert name != name2
     print("----------------The updated value are as follows-------------------")
     assert totfiles1 == totfiles - 1	     
     assert totsize1  == totsize - f_size
-    if  assert totltk1   == totltk	       
-    assert totmtk1   == totmtk	       
-    assert totltm1   == totltm	       
-    assert totmtm1   == totmtm	       
-    assert totmtg1   == totmtg	       
-    assert totmtt1   == totmtt	       
+    print("Old value: ", totltk, "New vlaue: ", totltk1) 
+    print("Old value: ", totmtk, "New value: ", totmtk1)      
+    print("Old value: ", totltm, "New value: ", totltm1)	       
+    print("Old value: ", totmtm, "New value: ", totmtm1)	       
+    print("Old value: ", totmtg, "New value: ", totmtg1)	       
+    print("Old value: ", totmtt, "New value: ", totmtt1)	       
