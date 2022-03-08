@@ -128,12 +128,11 @@ while True:
     dirpath = "./h1/"
     fil = [ f for f in os.listdir( dirpath ) if os.path.isfile(dirpath + f) ] 
     print(fil)
+    if fil == []:
+    	exit()
     f_size = os.path.getsize(dirpath + fil[0])
     print(os.listdir(dirpath))
-    if fil[0] == []:
-    	break
-    else:
-        subprocess.run(["rm", dirpath + fil[0]])
+    subprocess.run(["rm", dirpath + fil[0]])
 
     print("---------------------< Update Next > -----------------------")
     ech = subprocess.Popen(('echo', 'y'), stdout=subprocess.PIPE)
