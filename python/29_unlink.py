@@ -27,3 +27,5 @@ class db:
 
 tree = db('treesummary')
 print(tree.totfiles)
+
+if check 
